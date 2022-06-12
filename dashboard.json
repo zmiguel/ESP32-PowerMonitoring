@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -18,15 +21,20 @@
       }
     ]
   },
+  "description": "",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 44,
+  "iteration": 1655050421747,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -34,7 +42,8 @@
           },
           "custom": {
             "fillOpacity": 100,
-            "lineWidth": 0
+            "lineWidth": 0,
+            "spanNulls": false
           },
           "decimals": 2,
           "mappings": [],
@@ -132,7 +141,8 @@
         "rowHeight": 0.9,
         "showValue": "never",
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.1.2",
@@ -226,7 +236,10 @@
           ]
         },
         {
-          "datasource": "__expr__",
+          "datasource": {
+            "type": "__expr__",
+            "uid": "-100"
+          },
           "expression": "$LojaPower - $LojaSolar",
           "hide": false,
           "refId": "A",
@@ -321,7 +334,10 @@
           ]
         },
         {
-          "datasource": "__expr__",
+          "datasource": {
+            "type": "__expr__",
+            "uid": "-100"
+          },
           "expression": "$CozinhaPower - $CozinhaSolar",
           "hide": false,
           "refId": "B",
@@ -416,21 +432,25 @@
           ]
         },
         {
-          "datasource": "__expr__",
+          "datasource": {
+            "type": "__expr__",
+            "uid": "-100"
+          },
           "expression": "$CasaPower - $CasaSolar",
           "hide": false,
           "refId": "C",
           "type": "math"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Self Production Status",
       "type": "state-timeline"
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -443,8 +463,10 @@
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -504,9 +526,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -524,7 +550,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -550,14 +576,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Voltage Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -613,9 +639,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -633,7 +663,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -659,14 +689,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Current Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -722,9 +752,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -742,7 +776,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -768,14 +802,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Factor Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -827,9 +861,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -847,7 +885,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -873,14 +911,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -932,9 +970,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -952,7 +994,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -978,14 +1020,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Energy Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1037,9 +1079,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1057,7 +1103,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1083,14 +1129,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Frequency Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1143,9 +1189,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1163,7 +1213,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: today(), stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 1d)\r\n  |> spread()\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 1d)\r\n  |> spread()\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1201,13 +1251,14 @@
         }
       ],
       "timeFrom": "24h",
-      "timeShift": null,
       "title": "Loja Saved 24h",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1260,9 +1311,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1274,7 +1329,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo, stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 7d)\r\n  |> spread()\r\n  |> group(columns: [\"host\", \"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 7d)\r\n  |> spread()\r\n  |> group(columns: [\"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1312,13 +1367,14 @@
         }
       ],
       "timeFrom": "7d",
-      "timeShift": null,
       "title": "Loja  Saved 7 Days",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1371,9 +1427,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1391,7 +1451,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo, stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 28d)\r\n  |> spread()\r\n  |> group(columns: [\"host\", \"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 28d)\r\n  |> spread()\r\n  |> group(columns: [\"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1429,13 +1489,14 @@
         }
       ],
       "timeFrom": "28d",
-      "timeShift": null,
       "title": "Loja Saved 28 Days",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1487,7 +1548,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
           "groupBy": [
@@ -1539,14 +1600,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Loja Saved Total",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1602,9 +1663,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1622,7 +1687,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"Solar\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"current\")\n  |> last()\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -10s)\n  |> filter(fn: (r) => r._measurement == \"Solar\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"current\")\n  |> last()\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1649,14 +1714,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Current Combined",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${source}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1705,6 +1770,8 @@
       "links": [],
       "options": {
         "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
@@ -1716,10 +1783,14 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
           "alias": "Solar",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1737,7 +1808,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"ESP32\")\r\n  |> filter(fn: (r) => r.Device == \"PowerBox\" or r.Device == \"Solar\")\r\n  |> filter(fn: (r) => r._field == \"wifi-rssi\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"${bucket}\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"${esp}\")\r\n  |> filter(fn: (r) => r.Device == \"${box}\" or r.Device == \"${solar}\")\r\n  |> filter(fn: (r) => r._field == \"wifi-rssi\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1763,14 +1834,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "WiFi RSSI",
       "type": "bargauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1830,9 +1901,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1850,7 +1925,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1876,14 +1951,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Voltage Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -1939,9 +2014,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -1959,7 +2038,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1985,14 +2064,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Current Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2048,9 +2127,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2068,7 +2151,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2094,14 +2177,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Factor Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2153,9 +2236,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2173,7 +2260,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2199,14 +2286,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2258,9 +2345,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2278,7 +2369,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2304,14 +2395,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Energy Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2363,9 +2454,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2383,7 +2478,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2409,14 +2504,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Frequency Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2469,9 +2564,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2489,7 +2588,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: today(), stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 1d)\r\n  |> spread()\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 1d)\r\n  |> spread()\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2527,13 +2626,14 @@
         }
       ],
       "timeFrom": "24h",
-      "timeShift": null,
       "title": "Cozinha Saved 24h",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2586,9 +2686,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2600,7 +2704,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo, stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 7d)\r\n  |> spread()\r\n  |> group(columns: [\"host\", \"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 7d)\r\n  |> spread()\r\n  |> group(columns: [\"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -2638,13 +2742,14 @@
         }
       ],
       "timeFrom": "7d",
-      "timeShift": null,
       "title": "Cozinha  Saved 7 Days",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2697,9 +2802,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2717,7 +2826,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo, stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 28d)\r\n  |> spread()\r\n  |> group(columns: [\"host\", \"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 28d)\r\n  |> spread()\r\n  |> group(columns: [\"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2755,13 +2864,14 @@
         }
       ],
       "timeFrom": "28d",
-      "timeShift": null,
       "title": "Cozinha Saved 28 Days",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2813,7 +2923,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
           "groupBy": [
@@ -2865,14 +2975,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Cozinha Saved Total",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2924,9 +3034,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -2944,7 +3058,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"Solar\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"power\")\n  |> last()\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -10s)\n  |> filter(fn: (r) => r._measurement == \"Solar\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"power\")\n  |> last()\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2971,14 +3085,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Combined",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3038,9 +3152,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3058,7 +3176,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3084,14 +3202,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Voltage Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3147,9 +3265,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3167,7 +3289,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3193,14 +3315,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Current Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3256,9 +3378,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3276,7 +3402,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3302,14 +3428,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Factor Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3361,9 +3487,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3381,7 +3511,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3407,14 +3537,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Power Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3466,9 +3596,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3486,7 +3620,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3512,14 +3646,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Energy Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3571,9 +3705,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3591,7 +3729,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3617,14 +3755,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Frequency Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3677,9 +3815,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3697,7 +3839,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: today(), stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 1d)\r\n  |> spread()\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: today())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 1d)\r\n  |> spread()\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3735,13 +3877,14 @@
         }
       ],
       "timeFrom": "24h",
-      "timeShift": null,
       "title": "Casa Saved 24h",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3794,9 +3937,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3808,7 +3955,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo, stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 7d)\r\n  |> spread()\r\n  |> group(columns: [\"host\", \"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 7d)\r\n  |> spread()\r\n  |> group(columns: [\"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -3846,13 +3993,14 @@
         }
       ],
       "timeFrom": "7d",
-      "timeShift": null,
       "title": "Casa  Saved 7 Days",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -3905,9 +4053,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -3925,7 +4077,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo, stop: now())\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 28d)\r\n  |> spread()\r\n  |> group(columns: [\"host\", \"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -1mo)\r\n  |> filter(fn: (r) => r._measurement == \"Solar\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> window(every: 28d)\r\n  |> spread()\r\n  |> group(columns: [\"_measurement\"], mode:\"by\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 0.1982 }) )\r\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3963,13 +4115,14 @@
         }
       ],
       "timeFrom": "28d",
-      "timeShift": null,
       "title": "Casa Saved 28 Days",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -4021,7 +4174,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
           "groupBy": [
@@ -4073,14 +4226,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Casa Saved Total",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -4132,9 +4285,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -4152,7 +4309,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"Solar\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> last()\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -10s)\n  |> filter(fn: (r) => r._measurement == \"Solar\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> last()\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4179,13 +4336,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "S Energy Combined",
       "type": "stat"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4306,7 +4464,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -4402,20 +4561,24 @@
           ]
         },
         {
-          "datasource": "__expr__",
+          "datasource": {
+            "type": "__expr__",
+            "uid": "-100"
+          },
           "expression": "$Loja - $Solar",
           "hide": false,
           "refId": "Actual Usage",
           "type": "math"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Solar vs Loja",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4539,7 +4702,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -4635,20 +4799,24 @@
           ]
         },
         {
-          "datasource": "__expr__",
+          "datasource": {
+            "type": "__expr__",
+            "uid": "-100"
+          },
           "expression": "$Cozinha - $Solar",
           "hide": false,
           "refId": "Actual Usage",
           "type": "math"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Solar vs Cozinha",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4769,13 +4937,18 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
       "targets": [
         {
           "alias": "Solar",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -4827,6 +5000,10 @@
         },
         {
           "alias": "Casa",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -4871,21 +5048,24 @@
           ]
         },
         {
-          "datasource": "__expr__",
+          "datasource": {
+            "type": "__expr__",
+            "uid": "-100"
+          },
           "expression": "$Casa - $Solar",
           "hide": false,
           "refId": "Actual Usage",
           "type": "math"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Solar vs Casa",
       "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -4945,9 +5125,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -4965,7 +5149,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -4991,14 +5175,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Voltage Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5058,9 +5242,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5078,7 +5266,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5104,14 +5292,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Current Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5167,9 +5355,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5188,7 +5380,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5214,14 +5406,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Factor Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5281,9 +5473,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5301,7 +5497,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5327,14 +5523,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5386,9 +5582,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5406,7 +5606,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5432,14 +5632,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5491,9 +5691,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5511,7 +5715,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Loja\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5537,14 +5741,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Frequency Loja",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5604,9 +5808,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5624,7 +5832,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"current\")\n  |> last()\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -10s)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"current\")\n  |> last()\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -5651,15 +5859,15 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Current Combinado",
       "transformations": [],
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5711,9 +5919,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5731,7 +5943,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: today(), stop: now())\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> window(every: 1d)\n  |> spread()\n  |> last()\n  |> duplicate(column: \"_stop\", as: \"_time\")\n  |> window(every: inf)\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: today())\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> window(every: 1d)\n  |> spread()\n  |> last()\n  |> duplicate(column: \"_stop\", as: \"_time\")\n  |> window(every: inf)\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -5758,22 +5970,49 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Day",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
           },
           "mappings": [],
-          "max": 1000,
           "min": 100,
           "thresholds": {
             "mode": "absolute",
@@ -5784,11 +6023,11 @@
               },
               {
                 "color": "orange",
-                "value": 300
+                "value": 350
               },
               {
                 "color": "red",
-                "value": 600
+                "value": 700
               }
             ]
           },
@@ -5797,7 +6036,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 6,
         "w": 8,
         "x": 16,
         "y": 23
@@ -5806,21 +6045,26 @@
       "interval": "5s",
       "links": [],
       "options": {
-        "reduceOptions": {
+        "legend": {
           "calcs": [
             "last"
           ],
-          "fields": "",
-          "values": false
+          "displayMode": "list",
+          "placement": "bottom"
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "alias": "Solar",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5838,7 +6082,7 @@
           "measurement": "Solar_1",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"ESP32\")\r\n  |> filter(fn: (r) => r.Device == \"PowerBox\" or r.Device == \"Solar\")\r\n  |> filter(fn: (r) => r._field == \"acq-time\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"ESP32\")\r\n  |> filter(fn: (r) => r.Device == \"PowerBox\" or r.Device == \"Solar\")\r\n  |> filter(fn: (r) => r._field == \"acq-time\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5864,14 +6108,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Acq Time",
-      "type": "gauge"
+      "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -5931,9 +6175,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -5951,7 +6199,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5977,14 +6225,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Voltage Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6044,9 +6292,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6064,7 +6316,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6090,14 +6342,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Current Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6153,9 +6405,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6173,7 +6429,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6199,14 +6455,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Factor Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6266,9 +6522,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6286,7 +6546,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6312,14 +6572,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6371,9 +6631,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6391,7 +6655,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6417,14 +6681,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6476,9 +6740,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6496,7 +6764,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Cozinha\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6522,14 +6790,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Frequency Cozinha",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6589,9 +6857,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6609,7 +6881,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"power\")\n  |> last()\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -10s)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"power\")\n  |> last()\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -6636,14 +6908,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Combinado",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6695,9 +6967,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6715,7 +6991,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: -1mo, stop: now())\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> window(every: 1w)\n  |> spread()\n  |> last()\n  |> duplicate(column: \"_stop\", as: \"_time\")\n  |> window(every: inf)\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -1w)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> window(every: 1w)\n  |> spread()\n  |> last()\n  |> duplicate(column: \"_stop\", as: \"_time\")\n  |> window(every: inf)\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -6742,14 +7018,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Week",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6809,9 +7085,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6829,7 +7109,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"voltage\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6855,14 +7135,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Voltage Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -6922,9 +7202,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -6942,7 +7226,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"current\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -6968,14 +7252,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Current Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -7031,9 +7315,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -7051,7 +7339,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power-factor\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -7077,14 +7365,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Factor Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -7144,9 +7432,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -7164,7 +7456,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"power\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -7190,14 +7482,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -7249,9 +7541,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -7269,7 +7565,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"energy\")\r\n  |> last()\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -7295,14 +7591,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -7354,9 +7650,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -7374,7 +7674,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s)\r\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\r\n  |> filter(fn: (r) => r.Phase == \"Casa\")\r\n  |> filter(fn: (r) => r._field == \"freq\")\r\n  |> last()\r\n  |> yield()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -7400,14 +7700,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Frequency Casa",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -7459,9 +7759,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -7479,7 +7783,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> last()\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -10s)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> last()\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -7506,14 +7810,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Combinado",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -7565,9 +7869,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.5",
+      "pluginVersion": "9.0.0-beta3",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "groupBy": [
             {
               "params": [
@@ -7585,7 +7893,7 @@
           "measurement": "PowerBox",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"HomePower\")\n  |> range(start: -1mo, stop: now())\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> window(every: 1mo)\n  |> spread()\n  |> last()\n  |> duplicate(column: \"_stop\", as: \"_time\")\n  |> window(every: inf)\n  |> group(columns: [\"host\", \"_field\"], mode:\"by\")\n  |> sum()\n  |> yield()",
+          "query": "from(bucket: \"HomePower\")\n  |> range(start: -1mo)\n  |> filter(fn: (r) => r._measurement == \"PowerBox\")\n  |> filter(fn: (r) => r.Phase == \"Loja\" or r.Phase == \"Cozinha\" or r.Phase == \"Casa\")\n  |> filter(fn: (r) => r._field == \"energy\")\n  |> window(every: 1mo)\n  |> spread()\n  |> last()\n  |> duplicate(column: \"_stop\", as: \"_time\")\n  |> window(every: inf)\n  |> group(columns: [\"_field\"], mode:\"by\")\n  |> sum()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -7612,14 +7920,227 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy Month",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 995,
+          "min": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeAsIso"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 16,
+        "y": 29
+      },
+      "id": 111,
+      "interval": "5s",
+      "links": [],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.0.0-beta3",
+      "targets": [
+        {
+          "alias": "Solar",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "Solar_1",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"ESP32\")\r\n  |> filter(fn: (r) => r[\"Device\"] == \"PowerBox\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"acq-time\")\r\n  |> keep(columns: [\"_time\", \"Device\"])\r\n  |> last(column: \"_time\")\r\n  |> yield()",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "wifi-rssi"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=",
+              "value": "ESP32"
+            }
+          ]
+        }
+      ],
+      "title": "Last PowerBox TS",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 995,
+          "min": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeAsIso"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 29
+      },
+      "id": 112,
+      "interval": "5s",
+      "links": [],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.0.0-beta3",
+      "targets": [
+        {
+          "alias": "Solar",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "Solar_1",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"HomePower\")\r\n  |> range(start: -10s, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"ESP32\")\r\n  |> filter(fn: (r) => r[\"Device\"] == \"Solar\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"acq-time\")\r\n  |> keep(columns: [\"_time\", \"Device\"])\r\n  |> last(column: \"_time\")\r\n  |> yield()",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "wifi-rssi"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=",
+              "value": "ESP32"
+            }
+          ]
+        }
+      ],
+      "title": "Last Solar TS",
+      "type": "stat"
+    },
+    {
       "collapsed": true,
-      "datasource": null,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -7629,7 +8150,10 @@
       "id": 29,
       "panels": [
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -7671,8 +8195,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "red",
-                    "value": null
+                    "color": "red"
                   },
                   {
                     "color": "green",
@@ -7754,7 +8277,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -7765,13 +8289,14 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Voltage",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -7812,8 +8337,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -7891,7 +8415,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -7902,13 +8427,14 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Current",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -7950,8 +8476,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8029,7 +8554,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8040,13 +8566,14 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Power",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8087,8 +8614,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8166,7 +8692,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8177,13 +8704,14 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Energy",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8225,8 +8753,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8304,7 +8831,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8315,13 +8843,14 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Power Factor",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8363,8 +8892,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8442,7 +8970,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8453,13 +8982,14 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Frequency",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8500,8 +9030,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8573,7 +9102,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8590,12 +9120,14 @@
             }
           ],
           "timeFrom": "90d",
-          "timeShift": null,
           "title": "Energy History Loja",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8636,8 +9168,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8709,7 +9240,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8726,12 +9258,14 @@
             }
           ],
           "timeFrom": "90d",
-          "timeShift": null,
           "title": "Energy History Cozinha",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8772,8 +9306,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8845,7 +9378,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -8862,12 +9396,14 @@
             }
           ],
           "timeFrom": "90d",
-          "timeShift": null,
           "title": "Energy History Casa",
           "type": "timeseries"
         },
         {
-          "datasource": "HomePowerNew",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "UflQDtn7z"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -8908,8 +9444,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -8981,7 +9516,8 @@
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "pluginVersion": "8.0.6",
@@ -9065,7 +9601,6 @@
             }
           ],
           "timeFrom": "90d",
-          "timeShift": null,
           "title": "Energy History Combined",
           "type": "timeseries"
         }
@@ -9075,7 +9610,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -9088,7 +9626,10 @@
       "type": "row"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9213,7 +9754,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -9224,13 +9766,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Voltage",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9350,7 +9893,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -9361,13 +9905,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Current",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9488,7 +10033,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -9499,13 +10045,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9625,7 +10172,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -9636,13 +10184,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Energy",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9763,7 +10312,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -9774,13 +10324,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Power Factor",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9901,7 +10452,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -9912,13 +10464,14 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Frequency",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -9959,8 +10512,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -10032,7 +10584,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -10049,12 +10602,14 @@
         }
       ],
       "timeFrom": "90d",
-      "timeShift": null,
       "title": "Energy History Loja",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -10095,8 +10650,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -10168,7 +10722,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -10185,12 +10740,14 @@
         }
       ],
       "timeFrom": "90d",
-      "timeShift": null,
       "title": "Energy History Cozinha",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -10231,8 +10788,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -10304,7 +10860,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -10321,12 +10878,14 @@
         }
       ],
       "timeFrom": "90d",
-      "timeShift": null,
       "title": "Energy History Casa",
       "type": "timeseries"
     },
     {
-      "datasource": "HomePowerNew",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "UflQDtn7z"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -10367,8 +10926,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -10440,7 +10998,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.6",
@@ -10524,17 +11083,302 @@
         }
       ],
       "timeFrom": "90d",
-      "timeShift": null,
       "title": "Energy History Combined",
       "type": "timeseries"
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 30,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "HomePowerNew",
+          "value": "HomePowerNew"
+        },
+        "description": "InfluxDB2 Database",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Source",
+        "multi": false,
+        "name": "source",
+        "options": [],
+        "query": "influxdb",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "/.*Power.*/",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "HomePower",
+          "value": "HomePower"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "buckets()",
+        "description": "InfluxDB 2 Bucket with Data",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Bucket",
+        "multi": false,
+        "name": "bucket",
+        "options": [],
+        "query": "buckets()",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "ESP32",
+          "value": "ESP32"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\nschema.measurements(bucket: \"${bucket}\")",
+        "description": "ESP32 Data",
+        "hide": 0,
+        "includeAll": false,
+        "label": "ESP",
+        "multi": false,
+        "name": "esp",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\nschema.measurements(bucket: \"${bucket}\")",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Solar",
+          "value": "Solar"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\nschema.measurements(bucket: \"${bucket}\")",
+        "description": "Solar Data",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Solar",
+        "multi": false,
+        "name": "solar",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\nschema.measurements(bucket: \"${bucket}\")",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Loja",
+          "value": "Loja"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${solar}\"\r\n)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Sol 1",
+        "multi": false,
+        "name": "sol1",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${solar}\"\r\n)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Cozinha",
+          "value": "Cozinha"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${solar}\"\r\n)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Sol 2",
+        "multi": false,
+        "name": "sol2",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${solar}\"\r\n)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Casa",
+          "value": "Casa"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${solar}\"\r\n)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Sol 3",
+        "multi": false,
+        "name": "sol3",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${solar}\"\r\n)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "PowerBox",
+          "value": "PowerBox"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\nschema.measurements(bucket: \"${bucket}\")",
+        "description": "Power Box Data",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Box",
+        "multi": false,
+        "name": "box",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\nschema.measurements(bucket: \"${bucket}\")",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Loja",
+          "value": "Loja"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${box}\"\r\n)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Box 1",
+        "multi": false,
+        "name": "box1",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${box}\"\r\n)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Cozinha",
+          "value": "Cozinha"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${box}\"\r\n)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Box 2",
+        "multi": false,
+        "name": "box2",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${box}\"\r\n)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Casa",
+          "value": "Casa"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${source}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${box}\"\r\n)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Box 3",
+        "multi": false,
+        "name": "box3",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n  bucket: \"${bucket}\",\r\n  tag: \"Phase\",\r\n  measurement: \"${box}\"\r\n)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "0.1982",
+          "value": "0.1982"
+        },
+        "description": "Energy Cost in €/kWh",
+        "hide": 0,
+        "label": "Cost",
+        "name": "cost",
+        "options": [
+          {
+            "selected": true,
+            "text": "0.1982",
+            "value": "0.1982"
+          }
+        ],
+        "query": "0.1982",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
     "from": "now-24h",
@@ -10557,5 +11401,6 @@
   "timezone": "browser",
   "title": "HomePower",
   "uid": "newhomepowerdash",
-  "version": 33
+  "version": 55,
+  "weekStart": ""
 }
