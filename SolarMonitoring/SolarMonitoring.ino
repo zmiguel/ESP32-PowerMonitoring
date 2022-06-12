@@ -24,6 +24,7 @@ Point sensor[4] = {
 };
 
 unsigned long last_time = 0;
+int failed = 0;
 
 void ConnectToWiFiMulti() {
   WiFi.mode(WIFI_STA);
@@ -53,6 +54,7 @@ void setup() {
 
 void loop() {
   unsigned long start_time = millis();
+  failed = 0;
   sensor[0].clearFields();
   sensor[0].addField("wifi-rssi", WiFi.RSSI());
   sensor[0].addField("acq-time", last_time);
@@ -97,7 +99,11 @@ void loop() {
   // Write point
   for(int i=0;i<4;i++){
     if (!client.writePoint(sensor[i])) {
+      failed++;
     }
+  }
+  if(failed > 0){
+    ESP.restart();
   }
   last_time = millis() - start_time;
   unsigned long wait_time = 1000 - (millis() - start_time);
