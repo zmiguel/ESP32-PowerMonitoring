@@ -1,4 +1,3 @@
-
 #include <WiFiMulti.h>
 #include <InfluxDbClient.h>
 #include <PZEM004Tv30.h>
@@ -7,6 +6,12 @@
 #define PZEM_RX_PIN 16
 #define PZEM_TX_PIN 17
 #define PZEM_SERIAL Serial2
+
+#define TZ_INFO "WET-0WEST-1,M3.5.0/01:00:00,M10.5.0/02:00:00"
+#define NTP_SERVER1  "pt.pool.ntp.org"
+#define WRITE_PRECISION WritePrecision::S
+#define MAX_BATCH_SIZE 10
+#define WRITE_BUFFER_SIZE 50
 
 WiFiMulti WiFiMulti;
 InfluxDBClient client(INFLUXDB_URL, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN);
@@ -25,11 +30,8 @@ Point sensor[4] = {
 };
 
 unsigned long last_time = 0;
-int failed = 0;
 
 void ConnectToWiFiMulti() {
-  WiFi.mode(WIFI_STA);
-  WiFiMulti.addAP(SSID, WiFiPassword);
   while (WiFiMulti.run() != WL_CONNECTED) {
     delay(100);
   }
@@ -44,12 +46,20 @@ void ConnectToInflux() {
 
   // Check server connection
   if (!client.validateConnection()) {
+    delay(100);
     ESP.restart();
   }
+
+  client.setWriteOptions(WriteOptions().writePrecision(WRITE_PRECISION).batchSize(MAX_BATCH_SIZE).bufferSize(WRITE_BUFFER_SIZE));
 }
 
 void setup() {
+  delay(100);
+  WiFi.mode(WIFI_STA);
+  WiFiMulti.addAP(SSID, WiFiPassword);
+
   ConnectToWiFiMulti();
+  timeSync(TZ_INFO, NTP_SERVER1);
   ConnectToInflux();
 }
 
@@ -93,19 +103,11 @@ void loop() {
     } else {
     }
   }
-  // If no Wifi signal, try to reconnect it
-  if (WiFiMulti.run() != WL_CONNECTED) {
-    ESP.restart();
-  }
-  // Write point
+  ConnectToWiFiMulti();
   for(int i=0;i<4;i++){
-    if (!client.writePoint(sensor[i])) {
-      failed++;
-    }
+    client.writePoint(sensor[i]);
   }
-  if(failed > 0){
-    ESP.restart();
-  }
+  client.flushBuffer();
   last_time = millis() - start_time;
   unsigned long wait_time = 1000 - (millis() - start_time);
   if(wait_time > 1000) wait_time = 100;
