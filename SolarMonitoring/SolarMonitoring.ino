@@ -10,8 +10,8 @@
 #define TZ_INFO "WET-0WEST-1,M3.5.0/01:00:00,M10.5.0/02:00:00"
 #define NTP_SERVER1  "pt.pool.ntp.org"
 #define WRITE_PRECISION WritePrecision::S
-#define MAX_BATCH_SIZE 10
-#define WRITE_BUFFER_SIZE 50
+#define MAX_BATCH_SIZE 50
+#define WRITE_BUFFER_SIZE 500
 
 WiFiMulti WiFiMulti;
 InfluxDBClient client(INFLUXDB_URL, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN);
@@ -65,7 +65,6 @@ void setup() {
 
 void loop() {
   unsigned long start_time = millis();
-  failed = 0;
   sensor[0].clearFields();
   sensor[0].addField("wifi-rssi", WiFi.RSSI());
   sensor[0].addField("acq-time", last_time);
