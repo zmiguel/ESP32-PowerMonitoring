@@ -179,7 +179,7 @@ void loop() {
   last_time = millis() - start_time;
   Serial.println(last_time);
   WebSerial.println(last_time);
-  unsigned long wait_time = 1000 - (millis() - start_time - 5);
+  unsigned long wait_time = 1000 - (millis() - start_time - 10);
   if(wait_time > 1000) wait_time = 100;
   delay(wait_time);
 }
