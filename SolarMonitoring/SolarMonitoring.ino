@@ -3,6 +3,7 @@
 #include <PZEM004Tv30.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <AsyncElegantOTA.h>
 #include <WebSerialLite.h>
 #include "config.h"
 
@@ -34,7 +35,7 @@ Point sensor[4] = {
   Point("Solar")
 };
 
-uint8_t last_time = 0;
+uint16_t last_time = 0;
 uint8_t failed = 0;
 
 void ConnectToWiFiMulti() {
@@ -89,6 +90,7 @@ void setup() {
 
   ConnectToWiFiMulti();
   WebSerial.begin(&server);
+  AsyncElegantOTA.begin(&server);
   server.begin();
   timeSync(TZ_INFO, NTP_SERVER1);
   ConnectToInflux();

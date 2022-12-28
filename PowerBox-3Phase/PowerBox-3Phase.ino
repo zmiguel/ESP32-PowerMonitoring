@@ -3,6 +3,7 @@
 #include <PZEM004Tv30.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <AsyncElegantOTA.h>
 #include <WebSerialLite.h>
 #include "config.h"
 
@@ -34,7 +35,7 @@ Point sensor[4] = {
   Point("PowerBox")
 };
 
-uint8_t last_time = 0;
+uint16_t last_time = 0;
 uint8_t failed = 0;
 
 void ConnectToWiFiMulti() {
@@ -89,6 +90,7 @@ void setup() {
 
   ConnectToWiFiMulti();
   WebSerial.begin(&server);
+  AsyncElegantOTA.begin(&server);
   server.begin();
   timeSync(TZ_INFO, NTP_SERVER1);
   ConnectToInflux();
@@ -159,7 +161,7 @@ void loop() {
       Serial.println(client.getLastErrorMessage());
       WebSerial.println(client.getLastErrorMessage());
     }else{
-      failed = 0;
+      failed = 0;  
     }
   }
   if(failed > MAX_FAILED_READS){
@@ -177,7 +179,7 @@ void loop() {
   last_time = millis() - start_time;
   Serial.println(last_time);
   WebSerial.println(last_time);
-  unsigned long wait_time = 1000 - (millis() - start_time - 5);
+  unsigned long wait_time = 1000 - (millis() - start_time);
   if(wait_time > 1000) wait_time = 100;
   delay(wait_time);
 }
