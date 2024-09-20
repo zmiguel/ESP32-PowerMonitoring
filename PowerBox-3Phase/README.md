@@ -1,4 +1,4 @@
-# ESP32-PowerMonitoring (PowerBox/3Phase)
+# ESP32-PowerMonitoring (Solar)
 
 My take on a power measurement device using a ESP32 & PZEM-004T-v30
 
