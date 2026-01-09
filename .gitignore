@@ -3,3 +3,5 @@ debug_custom.json
 debug.cfg
 esp32.svd
 *.bin
+build/
+.DS_Store
