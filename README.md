@@ -98,6 +98,11 @@ const char *ENDPOINT = "http://host:port/path";
   rather than sent as `null`; the cycle is skipped only if all three fail.
   A reading of `0` is legitimate (an idle circuit reports 0 W / 0.00 power
   factor) and is never treated as missing.
+- **Retry spacing**: the PZEM library serves all six values from one Modbus
+  transaction and caches the result for 200 ms, stamping the cache *before* the
+  transaction. A retry inside that window would be answered from the cache and
+  re-record the previous cycle's values as if they were fresh, so retries are
+  spaced past it.
 - **Before NTP syncs**: samples are sent immediately without a timestamp so the
   receiver can stamp them on arrival, and dropped if they cannot be sent. They
   are never queued, since a queued sample would get the wrong time.
@@ -109,12 +114,67 @@ const char *ENDPOINT = "http://host:port/path";
 
 | Path | Purpose |
 | --- | --- |
-| `GET /status` | JSON health: uptime, reset reason, free/minimum heap, backlog depth, dropped & sent counters, clock sync, RSSI, acquisition time, last HTTP code, seconds since last successful POST |
+| `GET /status` | JSON health: uptime, reset reason, free/minimum heap, backlog depth, dropped & sent counters, clock sync, RSSI, acquisition time, last HTTP code, seconds since last successful POST, and a per-meter `sensors[]` block |
 | `/update` | ElegantOTA firmware upload |
 | `/webserial` | live log output |
 
 `/status` is the one to alert on — `last_ok_s_ago` climbing (or `-1`) means the
-device is sampling but not delivering. Note that neither OTA nor WebSerial is
+device is sampling but not delivering, and any `sensors[].ok` false means a
+meter has stopped answering. Note that neither OTA nor WebSerial is
 authenticated, so keep these devices on a trusted network.
 
-WebSerial accepts two commands: `restart` and `version`.
+WebSerial commands:
+
+| Command | Purpose |
+| --- | --- |
+| `restart` | reboot the device |
+| `version` | print the firmware version |
+| `sensors` | print the per-meter health counters |
+| `diag` | probe every meter address and print the raw Modbus reply |
+
+## Diagnosing a failing meter
+
+A failed read is never a single bad data point. The library reads all ten
+registers in one Modbus transaction, so either the whole meter is present for
+that second or none of it is — and the other two meters are unaffected, since
+each is a separate transaction.
+
+Failures are reported as:
+
+```text
+SENSOR FAIL 2 (Loja) addr=0x03: no Modbus reply after 2 attempts in 212ms (last txn 100ms) | V=nan I=nan P=nan E=nan Hz=nan PF=nan | consecutive=1 fails=17/48213 reads | last-good=1s ago
+```
+
+- `no Modbus reply` — nothing came back, or what came back failed CRC or was
+  the wrong length. The values shown are stale cache and mean nothing; they are
+  printed only to make that visible. `last txn` tells the two apart: 100 ms is
+  the library's read timeout running out in full, so nothing arrived at all,
+  while ~30 ms means a frame did arrive and was rejected.
+- `implausible values [Hz,PF]` — a frame *did* decode, but the named fields are
+  outside a plausible range. Points at bus corruption rather than a dead meter.
+- `consecutive` against `fails/reads` is the pair that matters: `consecutive=1`
+  with `fails` far below `reads` is an occasional glitch, while `consecutive`
+  climbing and `last-good` going stale is a meter that is gone.
+
+Logging is rate limited — the detail goes out when a fault starts and then once
+every 30 s while it lasts, because a dead meter fails once a second and
+WebSerial queues every message on the async server's heap. `/status` and the
+`sensors` command carry the exact counts regardless.
+
+`WARNING: No valid sensor data in this reading cycle` means all three failed at
+once, which points at the bus or the ESP32 side rather than at any one meter.
+
+For the byte level, `diag` probes each address directly and prints the raw
+reply — whether *anything* answered is the one thing the library never exposes:
+
+```text
+--- PZEM bus probe ---
+  addr 0x01: 25 bytes | OK - full 25-byte frame, CRC good | 01 04 14 09 0B ...
+  addr 0x03: 0 bytes | SILENT - meter unpowered, miswired, or not at this address
+```
+
+`SILENT` is a meter that is not there (unpowered, wiring, or a reassigned
+address); `GARBLED` is a meter answering into a bus problem. The probe also
+checks `0xF8`, the factory default address every meter answers — a garbled reply
+there is the healthy result with more than one live meter, while a clean frame
+means only one meter is still talking.

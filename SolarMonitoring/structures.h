@@ -31,3 +31,39 @@ struct Payload {
     Data data[3];
     Esp esp;
 };
+
+// Why a read cycle produced nothing usable. The PZEM library reads all ten
+// registers in a single Modbus transaction, so a failure is never one bad
+// field - it is the whole meter missing for that second.
+enum SensorFail : uint8_t {
+    SENSOR_OK = 0,
+    SENSOR_NO_REPLY,    // no frame came back, or it failed CRC / had the wrong length
+    SENSOR_BAD_VALUES   // a frame decoded, but a field is outside a plausible range
+};
+
+// One attempt at reading a meter, kept whole so a failure can be reported with
+// the values that were actually on the wire rather than just "it failed".
+struct SensorReading {
+    float current;
+    float voltage;
+    float power;
+    float energy;
+    float frequency;
+    float pf;
+    uint8_t reason;      // SensorFail
+    uint8_t badMask;     // bit per field that failed its range check, see field_names[]
+    uint16_t durationMs;
+};
+
+// Per-meter read health. Deliberately not part of Payload: that is malloc'd
+// once per backlogged sample, and this is the same three counters regardless.
+// Written only by the sampling loop, read by /status on the async server task,
+// hence volatile.
+struct SensorHealth {
+    volatile uint32_t reads;        // read cycles attempted
+    volatile uint32_t failures;     // cycles that produced no valid reading
+    volatile uint32_t consecutive;  // consecutive failed cycles, 0 while healthy
+    volatile uint32_t lastGoodMs;   // millis() of the last valid reading, 0 = never
+    volatile uint32_t lastTxnMs;    // millis() of the last Modbus transaction issued
+    volatile uint8_t lastReason;    // SensorFail code of the most recent failure
+};
